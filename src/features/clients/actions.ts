@@ -154,6 +154,36 @@ export async function createClientAction(
   }
 }
 
+// 6. Excluir Cliente
+export async function deleteClientAction(
+  clientId: string
+): Promise<{ success: boolean; error?: string }> {
+  const supabase = await createClient();
+  const companyId = await getCompanyId(supabase);
+  if (!companyId) {
+    return { success: false, error: "Usuário não autenticado." };
+  }
+  try {
+    await supabase
+      .from("client_events")
+      .delete()
+      .eq("client_id", clientId)
+      .eq("company_id", companyId);
+
+    const { error } = await supabase
+      .from("clients")
+      .delete()
+      .eq("id", clientId)
+      .eq("company_id", companyId);
+
+    if (error) throw error;
+    return { success: true };
+  } catch (err) {
+    console.error("Erro ao deletar cliente:", err);
+    return { success: false, error: "Erro ao excluir contato." };
+  }
+}
+
 // 5. Atualizar Cliente
 export async function updateClientAction(
   clientId: string,

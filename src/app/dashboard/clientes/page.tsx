@@ -21,7 +21,8 @@ import {
   Phone,
   Building,
   Building2,
-  Calendar
+  Calendar,
+  Trash2
 } from "lucide-react";
 import { 
   getClients, 
@@ -30,6 +31,7 @@ import {
   TimelineEventModel,
   createClientAction,
   updateClientAction,
+  deleteClientAction,
   ActionResult
 } from "@/features/clients/actions";
 
@@ -174,6 +176,20 @@ export default function CRMClientes() {
       setEditingClient(null);
     } else {
       setEditErrorMessage(result.error || "Erro desconhecido ao atualizar contato.");
+    }
+  };
+
+  const handleDeleteClient = async (clientId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!confirm("Tem certeza que deseja excluir este contato?")) return;
+    const result = await deleteClientAction(clientId);
+    if (result.success) {
+      setClients(prev => prev.filter(c => c.id !== clientId));
+      if (selectedClient?.id === clientId) {
+        setSelectedClient(null);
+      }
+    } else {
+      alert(result.error || "Erro ao excluir contato.");
     }
   };
 
@@ -346,6 +362,13 @@ export default function CRMClientes() {
                         }`}>
                           {isCliente ? "CLIENTE" : "FORNECEDOR"}
                         </span>
+                        <button
+                          onClick={(e) => handleDeleteClient(client.id, e)}
+                          className="text-gray-500 hover:text-red-400 transition-colors cursor-pointer"
+                          title="Excluir"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
                       </div>
                     </div>
                   </div>
