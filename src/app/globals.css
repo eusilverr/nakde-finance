@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-blue: #3b82f6;
+  --color-brand-blue-hover: #2563eb;
+  --color-bg-dark: #0f1115;
+  --color-bg-dark-secondary: #1c1c1c;
+  --color-neon-blue: #38bdf8;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #f9fafb;
+  --foreground: #111827;
+  --border-color: #e5e7eb;
+  --panel-bg: #ffffff;
+}
+
+.dark {
+  --background: #0f1115;
+  --foreground: #f3f4f6;
+  --border-color: rgba(255, 255, 255, 0.05);
+  --panel-bg: rgba(255, 255, 255, 0.02);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@layer utilities {
+  .glass-panel {
+    background-color: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(12px);
+  }
+  
+  .glass-panel-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)];
+  }
+
+  .neon-glow {
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+  }
+}
