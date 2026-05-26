@@ -196,7 +196,7 @@ export default function RelatoriosPage() {
                   type="date"
                   value={saleStartDate}
                   onChange={(e) => setSaleStartDate(e.target.value)}
-                  className="w-full px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:dark]"
+                  className="w-full px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:light dark]"
                 />
               </div>
               <div className="space-y-1">
@@ -205,7 +205,7 @@ export default function RelatoriosPage() {
                   type="date"
                   value={saleEndDate}
                   onChange={(e) => setSaleEndDate(e.target.value)}
-                  className="w-full px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:dark]"
+                  className="w-full px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:light dark]"
                 />
               </div>
               <div className="space-y-1">
@@ -251,7 +251,7 @@ export default function RelatoriosPage() {
                   type="date"
                   value={finStartDate}
                   onChange={(e) => setFinStartDate(e.target.value)}
-                  className="w-full px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:dark]"
+                  className="w-full px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:light dark]"
                 />
               </div>
               <div className="space-y-1">
@@ -260,7 +260,7 @@ export default function RelatoriosPage() {
                   type="date"
                   value={finEndDate}
                   onChange={(e) => setFinEndDate(e.target.value)}
-                  className="w-full px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:dark]"
+                  className="w-full px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:light dark]"
                 />
               </div>
               <div className="space-y-1">

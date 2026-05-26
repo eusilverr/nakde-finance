@@ -457,7 +457,7 @@ export default function GestaoServicos() {
                   <div className="space-y-1">
                     <label className="text-sm font-medium text-gray-300">Próxima Cobrança</label>
                     <input type="date" required={isSubscription} value={nextBillingDate} onChange={e => setNextBillingDate(e.target.value)}
-                      className="w-full px-4 py-2 border border-indigo-500/20 rounded-xl bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 [color-scheme:dark]" />
+                      className="w-full px-4 py-2 border border-indigo-500/20 rounded-xl bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 [color-scheme:light dark]" />
                   </div>
                 </div>
               )}
@@ -479,7 +479,7 @@ export default function GestaoServicos() {
                   <div className="space-y-1">
                     <label className="text-sm font-medium text-gray-300">Prazo de Entrega</label>
                     <input type="datetime-local" value={dueDate} onChange={e => setDueDate(e.target.value)}
-                      className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:dark]" />
+                      className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:light dark]" />
                   </div>
                 )}
               </div>
