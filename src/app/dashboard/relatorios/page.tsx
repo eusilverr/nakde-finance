@@ -213,7 +213,7 @@ export default function RelatoriosPage() {
                 <select
                   value={saleTypeFilter}
                   onChange={(e) => setSaleTypeFilter(e.target.value as any)}
-                  className="w-full px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+                  className="w-full px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                 >
                   <option value="all">Todos</option>
                   <option value="product">Produto</option>
@@ -226,7 +226,7 @@ export default function RelatoriosPage() {
                 <select
                   value={saleStatusFilter}
                   onChange={(e) => setSaleStatusFilter(e.target.value as any)}
-                  className="w-full px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+                  className="w-full px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                 >
                   <option value="all">Todos</option>
                   <option value="pending">Pendente</option>
@@ -268,7 +268,7 @@ export default function RelatoriosPage() {
                 <select
                   value={finType}
                   onChange={(e) => setFinType(e.target.value as any)}
-                  className="w-full px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+                  className="w-full px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                 >
                   <option value="all">Todos</option>
                   <option value="income">Receitas</option>

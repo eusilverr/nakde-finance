@@ -56,156 +56,137 @@ export async function getDashboardStats(): Promise<DashboardData> {
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const startOfMonthStr = startOfMonth.toISOString().split("T")[0];
-
     const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
     const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
     const startOfLastMonthStr = startOfLastMonth.toISOString().split("T")[0];
     const endOfLastMonthStr = endOfLastMonth.toISOString().split("T")[0];
 
-    // 1. Faturamento do mês atual (completed)
-    const { data: fatData } = await supabase
-      .from("financial_transactions")
-      .select("amount, payment_date, due_date")
-      .eq("company_id", companyId)
-      .eq("type", "income")
-      .eq("status", "completed")
-      .or(`payment_date.gte.${startOfMonthStr},and(payment_date.is.null,due_date.gte.${startOfMonthStr})`);
+    const [
+      { data: completedTxs },
+      { data: pendingTxs },
+      { data: products },
+      { count: totalClientes },
+      { count: totalFornecedores },
+      { data: recentTxs },
+      subscriptionsPending,
+    ] = await Promise.all([
+      // Todas as transactions completed em 1 query (cash flow + categorias + mês atual/anterior)
+      supabase
+        .from("financial_transactions")
+        .select("type, amount, payment_date, due_date, category")
+        .eq("company_id", companyId)
+        .eq("status", "completed"),
 
-    const faturamentoMensal = fatData?.reduce((acc, r) => acc + Number(r.amount), 0) || 0;
+      // Income + Expense pending em 1 query
+      supabase
+        .from("financial_transactions")
+        .select("id, description, amount, due_date, category, type")
+        .eq("company_id", companyId)
+        .eq("status", "pending")
+        .order("due_date", { ascending: true }),
 
-    // 2. Faturamento do mês anterior (para trend)
-    const { data: fatAnterior } = await supabase
-      .from("financial_transactions")
-      .select("amount, payment_date, due_date")
-      .eq("company_id", companyId)
-      .eq("type", "income")
-      .eq("status", "completed")
-      .or(`and(payment_date.gte.${startOfLastMonthStr},payment_date.lte.${endOfLastMonthStr}),and(payment_date.is.null,due_date.gte.${startOfLastMonthStr},due_date.lte.${endOfLastMonthStr})`);
+      // Produtos para alerta de estoque
+      supabase
+        .from("products")
+        .select("stock_quantity, min_stock")
+        .eq("company_id", companyId),
 
-    const fatAnteriorVal = fatAnterior?.reduce((acc, r) => acc + Number(r.amount), 0) || 0;
+      // Total clientes
+      supabase
+        .from("clients")
+        .select("*", { count: "exact", head: true })
+        .eq("company_id", companyId)
+        .eq("type", "cliente"),
 
-    // 3. Despesas do mês atual
-    const { data: despData } = await supabase
-      .from("financial_transactions")
-      .select("amount, payment_date, due_date")
-      .eq("company_id", companyId)
-      .eq("type", "expense")
-      .eq("status", "completed")
-      .or(`payment_date.gte.${startOfMonthStr},and(payment_date.is.null,due_date.gte.${startOfMonthStr})`);
+      // Total fornecedores
+      supabase
+        .from("clients")
+        .select("*", { count: "exact", head: true })
+        .eq("company_id", companyId)
+        .eq("type", "fornecedor"),
 
-    const despesasMensais = despData?.reduce((acc, r) => acc + Number(r.amount), 0) || 0;
+      // Atividades recentes
+      supabase
+        .from("financial_transactions")
+        .select("description, created_at")
+        .eq("company_id", companyId)
+        .order("created_at", { ascending: false })
+        .limit(4),
 
-    // 4. Despesas do mês anterior
-    const { data: despAnterior } = await supabase
-      .from("financial_transactions")
-      .select("amount, payment_date, due_date")
-      .eq("company_id", companyId)
-      .eq("type", "expense")
-      .eq("status", "completed")
-      .or(`and(payment_date.gte.${startOfLastMonthStr},payment_date.lte.${endOfLastMonthStr}),and(payment_date.is.null,due_date.gte.${startOfLastMonthStr},due_date.lte.${endOfLastMonthStr})`);
+      // Assinaturas pendentes
+      getPendingSubscriptionAmount(),
+    ]);
 
-    const despAnteriorVal = despAnterior?.reduce((acc, r) => acc + Number(r.amount), 0) || 0;
+    // === Deriva tudo a partir dos datasets combinados ===
 
-    const lucroLiquido = faturamentoMensal - despesasMensais;
-    const lucroAnterior = fatAnteriorVal - despAnteriorVal;
-
-    // 5. Contas a Receber (income pending) — com detalhes
-    const { data: receberData } = await supabase
-      .from("financial_transactions")
-      .select("id, description, amount, due_date, category")
-      .eq("company_id", companyId)
-      .eq("type", "income")
-      .eq("status", "pending")
-      .order("due_date", { ascending: true });
-
-    const contasAReceberList: ReceberItem[] = (receberData || []).map((r) => ({
-      id: r.id,
-      description: r.description,
-      amount: Number(r.amount),
-      due_date: r.due_date,
-      category: r.category,
-    }));
-
-    const subscriptionsPending = await getPendingSubscriptionAmount();
-    const contasAReceber =
-      (receberData?.reduce((acc, r) => acc + Number(r.amount), 0) || 0) + subscriptionsPending;
-
-    // 6. Contas a Pagar (expense pending)
-    const { data: pagarData } = await supabase
-      .from("financial_transactions")
-      .select("amount")
-      .eq("company_id", companyId)
-      .eq("type", "expense")
-      .eq("status", "pending");
-
-    const contasAPagar = pagarData?.reduce((acc, r) => acc + Number(r.amount), 0) || 0;
-
-    // 7. Alertas de Estoque
-    const { data: products } = await supabase
-      .from("products")
-      .select("stock_quantity, min_stock")
-      .eq("company_id", companyId);
-
-    const estoqueBaixoCount = products?.filter(p => p.stock_quantity <= p.min_stock).length || 0;
-
-    // 8. Total Clientes e Fornecedores
-    const { count: totalClientes } = await supabase
-      .from("clients")
-      .select("*", { count: "exact", head: true })
-      .eq("company_id", companyId)
-      .eq("type", "cliente");
-
-    const { count: totalFornecedores } = await supabase
-      .from("clients")
-      .select("*", { count: "exact", head: true })
-      .eq("company_id", companyId)
-      .eq("type", "fornecedor");
-
-    // 9. Cash Flow real por mês — todos os meses com dados
-    const { data: allCompleted } = await supabase
-      .from("financial_transactions")
-      .select("type, amount, payment_date, due_date")
-      .eq("company_id", companyId)
-      .eq("status", "completed")
-      .order("payment_date", { ascending: true, nullsFirst: false });
+    let faturamentoMensal = 0;
+    let fatAnteriorVal = 0;
+    let despesasMensais = 0;
+    let despAnteriorVal = 0;
 
     const cashFlowMap: Record<string, { income: number; expense: number }> = {};
-    for (const tx of allCompleted || []) {
-      const dateStr = tx.payment_date || tx.due_date;
-      if (!dateStr) continue;
-      const key = dateStr.slice(0, 7);
-      if (!cashFlowMap[key]) cashFlowMap[key] = { income: 0, expense: 0 };
-      if (tx.type === "income") cashFlowMap[key].income += Number(tx.amount);
-      else cashFlowMap[key].expense += Number(tx.amount);
-    }
-
-    const monthNames = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-    const cashFlow = Object.entries(cashFlowMap)
-      .sort(([a], [b]) => a.localeCompare(b))
-      .slice(-12)
-      .map(([key, val]) => {
-        const monthIdx = parseInt(key.split("-")[1]) - 1;
-        return { month: monthNames[monthIdx] || key, ...val };
-      });
-
-    // 10. Receitas e Despesas por Categoria
-    const { data: catData } = await supabase
-      .from("financial_transactions")
-      .select("type, category, amount")
-      .eq("company_id", companyId)
-      .eq("status", "completed");
-
     const receitasPorCategoria: Record<string, number> = {};
     const despesasPorCategoria: Record<string, number> = {};
 
-    for (const tx of catData || []) {
+    for (const tx of completedTxs || []) {
       const amount = Number(tx.amount);
-      if (tx.type === "income") {
+      const dateStr = tx.payment_date || tx.due_date;
+      const isIncome = tx.type === "income";
+
+      if (dateStr) {
+        if (dateStr >= startOfMonthStr) {
+          if (isIncome) faturamentoMensal += amount;
+          else despesasMensais += amount;
+        } else if (dateStr >= startOfLastMonthStr && dateStr <= endOfLastMonthStr) {
+          if (isIncome) fatAnteriorVal += amount;
+          else despAnteriorVal += amount;
+        }
+
+        const key = dateStr.slice(0, 7);
+        if (!cashFlowMap[key]) cashFlowMap[key] = { income: 0, expense: 0 };
+        if (isIncome) cashFlowMap[key].income += amount;
+        else cashFlowMap[key].expense += amount;
+      }
+
+      if (isIncome) {
         receitasPorCategoria[tx.category] = (receitasPorCategoria[tx.category] || 0) + amount;
       } else {
         despesasPorCategoria[tx.category] = (despesasPorCategoria[tx.category] || 0) + amount;
       }
     }
+
+    const contasAReceberList: ReceberItem[] = [];
+    let contasAReceber = 0;
+    let contasAPagar = 0;
+
+    for (const tx of pendingTxs || []) {
+      const amount = Number(tx.amount);
+      if (tx.type === "income") {
+        contasAReceber += amount;
+        contasAReceberList.push({
+          id: tx.id,
+          description: tx.description,
+          amount,
+          due_date: tx.due_date,
+          category: tx.category,
+        });
+      } else {
+        contasAPagar += amount;
+      }
+    }
+
+    contasAReceber += subscriptionsPending;
+
+    const estoqueBaixoCount = products?.filter(p => p.stock_quantity <= p.min_stock).length || 0;
+
+    const monthNames = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+    const cashFlow = Object.entries(cashFlowMap)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .slice(-12)
+      .map(([key, val]) => ({
+        month: monthNames[parseInt(key.split("-")[1]) - 1] || key,
+        ...val,
+      }));
 
     const receitasCategoria = Object.entries(receitasPorCategoria)
       .map(([name, value]) => ({ name, value: Math.round(value * 100) / 100 }))
@@ -215,27 +196,18 @@ export async function getDashboardStats(): Promise<DashboardData> {
       .map(([name, value]) => ({ name, value: Math.round(value * 100) / 100 }))
       .sort((a, b) => b.value - a.value);
 
-    // 11. Tarefas Recentes (últimas transações)
-    const { data: recentTxs } = await supabase
-      .from("financial_transactions")
-      .select("description, created_at")
-      .eq("company_id", companyId)
-      .order("created_at", { ascending: false })
-      .limit(4);
-
     const recentTasks = recentTxs?.map(t => ({
       text: t.description || "Lançamento financeiro",
-      time: new Date(t.created_at).toLocaleDateString("pt-BR")
+      time: new Date(t.created_at).toLocaleDateString("pt-BR"),
     })) || [];
 
-    // 12. Trends
+    const lucroLiquido = faturamentoMensal - despesasMensais;
+    const lucroAnterior = fatAnteriorVal - despAnteriorVal;
+
     const calcTrend = (atual: number, anterior: number) => {
       if (anterior === 0) return atual > 0 ? 100 : 0;
       return Math.round(((atual - anterior) / anterior) * 100 * 10) / 10;
     };
-
-    const receberAnterior = 0;
-    const pagarAnterior = 0;
 
     return {
       faturamentoMensal,
@@ -254,8 +226,8 @@ export async function getDashboardStats(): Promise<DashboardData> {
       trends: {
         faturamento: calcTrend(faturamentoMensal, fatAnteriorVal),
         lucro: calcTrend(lucroLiquido, lucroAnterior),
-        receber: calcTrend(contasAReceber, receberAnterior),
-        pagar: calcTrend(contasAPagar, pagarAnterior),
+        receber: calcTrend(contasAReceber, 0),
+        pagar: calcTrend(contasAPagar, 0),
       },
     };
   } catch (error) {

@@ -3,6 +3,12 @@
 import { createClient } from "@/lib/supabase/server";
 import { createTransactionAction } from "@/features/finance/actions";
 
+function generateSku(): string {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const rand = Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+  return `PROD-${rand}`;
+}
+
 export interface ProductModel {
   id: string;
   company_id: string;
@@ -75,8 +81,10 @@ export async function createProductAction(productData: Partial<ProductModel>): P
 
   const now = new Date().toISOString();
 
+  const sku = productData.sku?.trim() || generateSku();
+
   const insertData: Record<string, unknown> = {
-    sku: productData.sku,
+    sku,
     name: productData.name,
     description: productData.description,
     sale_price: productData.sale_price,
@@ -188,8 +196,10 @@ export async function updateProductAction(
 
   const oldStock = (currentProduct as Record<string, unknown>)?.stock_quantity ?? 0;
 
+  const sku = productData.sku?.trim() || undefined;
+
   const updateData: Record<string, unknown> = {
-    sku: productData.sku,
+    sku,
     name: productData.name,
     description: productData.description,
     sale_price: productData.sale_price,

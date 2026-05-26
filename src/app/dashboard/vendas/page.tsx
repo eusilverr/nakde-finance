@@ -382,7 +382,7 @@ export default function GestaoVendas() {
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="py-2 pl-3 pr-8 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+              className="py-2 pl-3 pr-8 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
             >
               {STATUS_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -405,7 +405,7 @@ export default function GestaoVendas() {
             <select
               value={filterResponsible}
               onChange={(e) => setFilterResponsible(e.target.value)}
-              className="py-2 pl-3 pr-8 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+              className="py-2 pl-3 pr-8 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
             >
               <option value="all">Responsável (todos)</option>
               {responsibleList.map((r) => (
@@ -514,7 +514,7 @@ export default function GestaoVendas() {
                       required
                       value={clientId}
                       onChange={(e) => handleClientChange(e.target.value)}
-                      className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+                      className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                     >
                       <option value="" disabled>Selecione um cliente...</option>
                       {clients.map((c) => (
@@ -527,7 +527,7 @@ export default function GestaoVendas() {
                     <select
                       value={saleType}
                       onChange={(e) => setSaleType(e.target.value as any)}
-                      className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+                      className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                     >
                       <option value="product">Produto</option>
                       <option value="service">Serviço</option>
@@ -597,7 +597,7 @@ export default function GestaoVendas() {
                         <select
                           value={item.item_type}
                           onChange={(e) => updateItem(idx, "item_type", e.target.value)}
-                          className="w-full px-2 py-1.5 border border-[var(--border-color)] rounded-lg bg-white/5 text-xs focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+                          className="w-full px-2 py-1.5 border border-[var(--border-color)] rounded-lg bg-white/5 text-xs focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                         >
                           <option value="product">Produto</option>
                           <option value="service">Serviço</option>
@@ -608,7 +608,7 @@ export default function GestaoVendas() {
                         <select
                           value={item.item_id}
                           onChange={(e) => updateItem(idx, "item_id", e.target.value)}
-                          className="w-full px-2 py-1.5 border border-[var(--border-color)] rounded-lg bg-white/5 text-xs focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+                          className="w-full px-2 py-1.5 border border-[var(--border-color)] rounded-lg bg-white/5 text-xs focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                         >
                           <option value="" disabled>Selecione</option>
                           {(item.item_type === "service" ? services : products).map((p) => (
@@ -685,7 +685,7 @@ export default function GestaoVendas() {
                     <select
                       value={paymentMethod || ""}
                       onChange={(e) => setPaymentMethod(e.target.value as any || null)}
-                      className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+                      className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                     >
                       <option value="">Selecione...</option>
                       <option value="pix">PIX</option>
@@ -699,7 +699,7 @@ export default function GestaoVendas() {
                     <select
                       value={installments}
                       onChange={(e) => setInstallments(parseInt(e.target.value))}
-                      className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+                      className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                     >
                       {Array.from({ length: 12 }, (_, i) => i + 1).map((n) => (
                         <option key={n} value={n}>{n}x {n === 1 ? "(à vista)" : ""}</option>

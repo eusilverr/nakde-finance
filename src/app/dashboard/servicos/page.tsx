@@ -378,7 +378,7 @@ export default function GestaoServicos() {
                 <div className="space-y-1">
                   <label className="text-sm font-medium text-gray-300">Cliente</label>
                   <select required value={clientId} onChange={e => setClientId(e.target.value)}
-                    className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900">
+                    className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]">
                     <option value="" disabled>Selecione um cliente...</option>
                     {clients.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                   </select>
@@ -447,7 +447,7 @@ export default function GestaoServicos() {
                   <div className="space-y-1">
                     <label className="text-sm font-medium text-gray-300">Ciclo de Cobrança</label>
                     <select required={isSubscription} value={billingCycle} onChange={e => setBillingCycle(e.target.value)}
-                      className="w-full px-4 py-2 border border-indigo-500/20 rounded-xl bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 [&>option]:bg-gray-900">
+                      className="w-full px-4 py-2 border border-indigo-500/20 rounded-xl bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                       <option value="mensal">Mensal</option>
                       <option value="trimestral">Trimestral</option>
                       <option value="semestral">Semestral</option>
@@ -466,7 +466,7 @@ export default function GestaoServicos() {
                 <div className="space-y-1">
                   <label className="text-sm font-medium text-gray-300">Status</label>
                   <select required value={status} onChange={e => setStatus(e.target.value as any)}
-                    className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900">
+                    className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]">
                     <option value="pendente">Pendente</option>
                     <option value="em_andamento">Em Andamento</option>
                     <option value="concluido">Concluído</option>

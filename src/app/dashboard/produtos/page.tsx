@@ -411,7 +411,7 @@ export default function GestaoProdutos() {
                 <div className="space-y-1">
                   <label className="text-sm font-medium text-gray-300">Tipo</label>
                   <select value={type} onChange={e => setType(e.target.value as any)}
-                    className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900">
+                    className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]">
                     <option value="physical">Físico</option>
                     <option value="digital">Digital (E-book/Curso)</option>
                     <option value="service">Serviço/Mentoria</option>
@@ -483,7 +483,7 @@ export default function GestaoProdutos() {
                   <label className="text-sm font-medium text-gray-300">Fornecedor</label>
                   <div className="flex gap-2">
                     <select value={supplierId} onChange={e => setSupplierId(e.target.value)}
-                      className="flex-1 w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900">
+                      className="flex-1 w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]">
                       <option value="">Selecione um fornecedor</option>
                       {suppliers.map(s => (
                         <option key={s.id} value={s.id}>{s.name}</option>

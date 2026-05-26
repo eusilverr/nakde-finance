@@ -283,7 +283,7 @@ export default function GestaoFinanceira() {
             <select
               value={filterType}
               onChange={e => setFilterType(e.target.value as any)}
-              className="py-2 pl-3 pr-8 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+              className="py-2 pl-3 pr-8 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
             >
               <option value="all">Todos</option>
               <option value="income">Entradas</option>
@@ -453,7 +453,7 @@ export default function GestaoFinanceira() {
                   <label className="text-sm font-medium text-gray-300">Categoria</label>
                   <select 
                     value={category} onChange={e => setCategory(e.target.value)}
-                    className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+                    className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                   >
                     {type === "income" ? (
                       <>
@@ -475,7 +475,7 @@ export default function GestaoFinanceira() {
                   <label className="text-sm font-medium text-gray-300">Status</label>
                   <select 
                     value={status} onChange={e => setStatus(e.target.value as any)}
-                    className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+                    className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                   >
                     <option value="completed">Efetuado (Pago/Recebido)</option>
                     <option value="pending">Pendente (A Pagar/A Receber)</option>
@@ -541,7 +541,7 @@ export default function GestaoFinanceira() {
                   <label className="text-sm font-medium text-gray-300">Categoria</label>
                   <select 
                     value={editCategory} onChange={e => setEditCategory(e.target.value)}
-                    className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+                    className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                   >
                     <option value="Vendas">Vendas</option>
                     <option value="Serviços">Serviços</option>
@@ -556,7 +556,7 @@ export default function GestaoFinanceira() {
                   <label className="text-sm font-medium text-gray-300">Status</label>
                   <select 
                     value={editStatus} onChange={e => setEditStatus(e.target.value as TransactionStatus)}
-                    className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+                    className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                   >
                     <option value="completed">Efetuado (Pago/Recebido)</option>
                     <option value="pending">Pendente (A Pagar/A Receber)</option>
@@ -569,7 +569,7 @@ export default function GestaoFinanceira() {
                 <label className="text-sm font-medium text-gray-300">Forma de Pagamento</label>
                 <select 
                   value={editPaymentMethod} onChange={e => setEditPaymentMethod(e.target.value)}
-                  className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [&>option]:bg-gray-900"
+                  className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                 >
                   <option value="">Selecione...</option>
                   <option value="pix">PIX</option>
