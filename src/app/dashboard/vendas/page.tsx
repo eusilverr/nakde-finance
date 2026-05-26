@@ -585,13 +585,14 @@ export default function GestaoVendas() {
                   </p>
                 )}
 
+                <div className="overflow-x-auto pb-2">
                 {items.map((item, idx) => (
                   <div
                     key={idx}
-                    className="flex items-start gap-3 p-4 mb-3 border border-[var(--border-color)] rounded-xl bg-white/5"
+                    className="flex items-start gap-3 p-4 mb-3 border border-[var(--border-color)] rounded-xl bg-white/5 min-w-[800px]"
                   >
-                    <div className="flex-1 grid grid-cols-12 gap-2 items-end">
-                      <div className="col-span-3 space-y-1">
+                    <div className="flex-1 grid grid-cols-12 gap-3 items-end">
+                      <div className="col-span-2 space-y-1">
                         <label className="text-[11px] font-medium text-gray-500">Tipo</label>
                         <select
                           value={item.item_type}
@@ -638,7 +639,7 @@ export default function GestaoVendas() {
                           className="w-full px-2 py-1.5 border border-[var(--border-color)] rounded-lg bg-white/5 text-xs focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                         />
                       </div>
-                      <div className="col-span-1 space-y-1">
+                      <div className="col-span-2 space-y-1">
                         <label className="text-[11px] font-medium text-gray-500">Desc.</label>
                         <input
                           type="number"
@@ -665,6 +666,7 @@ export default function GestaoVendas() {
                     </button>
                   </div>
                 ))}
+                </div>
 
                 {items.length > 0 && (
                   <div className="flex justify-end items-center gap-4 py-3 px-4 border-t border-[var(--border-color)] mt-2">
