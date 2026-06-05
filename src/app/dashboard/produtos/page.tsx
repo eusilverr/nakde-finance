@@ -240,19 +240,19 @@ export default function GestaoProdutos() {
   return (
     <>
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 sm:mb-8">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">Produtos & Estoque</h2>
-          <p className="text-gray-500 mt-1">Gestão de produtos físicos, infoprodutos e serviços com margem de lucro.</p>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Produtos & Estoque</h2>
+          <p className="text-gray-500 mt-1 text-sm sm:text-base">Gestão de produtos físicos, infoprodutos e serviços com margem de lucro.</p>
         </div>
         <button onClick={() => { setEditingProduct(null); setSaveError(null); setShowModal(true); }}
-          className="flex items-center gap-2 py-3 px-5 rounded-xl text-sm font-medium text-white bg-[var(--color-brand-blue)] hover:bg-[var(--color-brand-blue-hover)] transition-all cursor-pointer shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:scale-105">
+          className="flex items-center gap-2 py-2.5 sm:py-3 px-4 sm:px-5 rounded-xl text-sm font-medium text-white bg-[var(--color-brand-blue)] hover:bg-[var(--color-brand-blue-hover)] transition-all cursor-pointer shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:scale-105 w-full sm:w-auto justify-center">
           <Plus size={18} /> Cadastrar Produto
         </button>
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
         <div className="glass-panel rounded-2xl p-6 relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform"><Box className="w-16 h-16" /></div>
           <p className="text-sm font-medium text-gray-500 mb-1">Itens em Estoque</p>
@@ -283,8 +283,8 @@ export default function GestaoProdutos() {
       </div>
 
       {/* Product Table */}
-      <div className="glass-panel rounded-3xl p-6">
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+      <div className="glass-panel rounded-3xl p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-4 sm:mb-6 gap-3 sm:gap-4">
           <h3 className="text-lg font-bold flex items-center gap-2">
             <Tag className="w-5 h-5 text-[var(--color-brand-blue)]" /> Catálogo
           </h3>
@@ -368,13 +368,13 @@ export default function GestaoProdutos() {
                           </div>
                         ) : <span className="text-gray-500 text-xs">Ilimitado</span>}
                       </td>
-                      <td className="px-4 py-4 text-right">
+                      <td className="px-4 py-4 text-right whitespace-nowrap">
                         <button onClick={() => handleEditProduct(product)}
-                          className="p-2 rounded-lg text-gray-500 hover:bg-sky-500/10 hover:text-sky-400 transition-colors opacity-0 group-hover:opacity-100">
+                          className="p-2 rounded-lg text-gray-500 hover:bg-sky-500/10 hover:text-sky-400 transition-colors md:opacity-0 md:group-hover:opacity-100">
                           <Pencil className="w-4 h-4" />
                         </button>
                         <button onClick={() => handleDelete(product.id)}
-                          className="p-2 rounded-lg text-gray-500 hover:bg-rose-500/10 hover:text-rose-500 transition-colors opacity-0 group-hover:opacity-100">
+                          className="p-2 rounded-lg text-gray-500 hover:bg-rose-500/10 hover:text-rose-500 transition-colors md:opacity-0 md:group-hover:opacity-100">
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </td>
@@ -389,9 +389,9 @@ export default function GestaoProdutos() {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="glass-panel w-full max-w-xl rounded-3xl p-8 shadow-2xl relative overflow-y-auto max-h-[90vh]">
-            <h3 className="text-xl font-bold mb-6">{editingProduct ? "Editar Produto" : "Cadastrar Novo Produto"}</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-2 sm:p-4">
+          <div className="glass-panel w-full max-w-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl relative overflow-y-auto max-h-[90vh]">
+            <h3 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">{editingProduct ? "Editar Produto" : "Cadastrar Novo Produto"}</h3>
             
             <form onSubmit={handleSubmitProduct} className="space-y-4">
               {saveError && (
@@ -514,8 +514,8 @@ export default function GestaoProdutos() {
 
       {/* Modal confirmação redução de estoque */}
       {showStockModal && stockModalData && (
-        <div className="fixed inset-0 z-[65] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="glass-panel w-full max-w-md rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+        <div className="fixed inset-0 z-[65] flex items-center justify-center bg-black/60 backdrop-blur-sm p-2 sm:p-4">
+          <div className="glass-panel w-full max-w-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl relative overflow-hidden">
             <h3 className="text-lg font-bold mb-2">Estoque Reduzido</h3>
             <p className="text-sm text-gray-400 mb-6">
               O estoque foi reduzido de <strong>{stockModalData.oldStock}</strong> para <strong>{stockModalData.newStock}</strong>.
@@ -553,8 +553,8 @@ export default function GestaoProdutos() {
 
       {/* Mini-modal Cadastrar Fornecedor */}
       {showSupplierModal && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="glass-panel w-full max-w-md rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-2 sm:p-4">
+          <div className="glass-panel w-full max-w-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl relative overflow-hidden">
             <h3 className="text-lg font-bold mb-6">Novo Fornecedor</h3>
             <form onSubmit={handleCreateSupplier} className="space-y-4">
               <div className="space-y-1">

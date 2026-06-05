@@ -141,14 +141,14 @@ export default function RelatoriosPage() {
   return (
     <div className="max-w-4xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 sm:mb-8">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">Relatórios</h2>
-          <p className="text-gray-500 mt-1">Gere relatórios gerenciais e exporte dados da sua operação em PDF.</p>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Relatórios</h2>
+          <p className="text-gray-500 mt-1 text-sm sm:text-base">Gere relatórios gerenciais e exporte dados da sua operação em PDF.</p>
         </div>
       </div>
 
-      <div className="glass-panel rounded-3xl p-8">
+      <div className="glass-panel rounded-3xl p-4 sm:p-6 lg:p-8">
         <h3 className="text-lg font-bold mb-6">Selecione o tipo de relatório</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">

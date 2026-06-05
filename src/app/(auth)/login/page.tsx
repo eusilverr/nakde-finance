@@ -73,7 +73,7 @@ export default function LoginPage() {
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[var(--color-neon-blue)]/10 rounded-full blur-[120px] mix-blend-screen pointer-events-none" />
 
       <div className="relative z-10 w-full max-w-md">
-        <div className="glass-panel rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden">
+        <div className="glass-panel rounded-2xl sm:rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
           {/* Neon Top Bar */}
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[var(--color-brand-blue)] to-transparent opacity-60 animate-pulse" />
           

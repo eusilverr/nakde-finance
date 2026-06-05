@@ -135,10 +135,10 @@ export default function DashboardEstrategico() {
   ) => {
     const total = data.reduce((s, d) => s + d.value, 0);
     return (
-      <div className="glass-panel rounded-2xl p-5 flex flex-col items-center">
+      <div className="glass-panel rounded-2xl p-4 sm:p-5 flex flex-col items-center">
         <h4 className="text-sm font-bold mb-3 text-center">{title}</h4>
         {data.length > 0 ? (
-          <ResponsiveContainer width="100%" height={200}>
+          <ResponsiveContainer width="100%" height={180} className="sm:h-[200px]">
             <PieChart>
               <Pie
                 data={data}
@@ -180,21 +180,21 @@ export default function DashboardEstrategico() {
 
   return (
     <>
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold tracking-tight">Visão Estratégica</h2>
-        <p className="text-gray-500 mt-1">
+      <div className="mb-6 sm:mb-8">
+        <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Visão Estratégica</h2>
+        <p className="text-gray-500 mt-1 text-sm sm:text-base">
           Acompanhe a saúde financeira e operacional da empresa em tempo real.
         </p>
       </div>
 
       {/* KPI Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4 mb-6 sm:mb-8">
         {kpis.map((kpi, index) => {
           const Icon = kpi.icon;
           return (
             <div 
               key={index}
-              className="glass-panel rounded-2xl p-5 group relative overflow-hidden"
+              className="glass-panel rounded-2xl p-4 sm:p-5 group relative overflow-hidden"
             >
               <div className="absolute -inset-px bg-gradient-to-r from-[var(--color-neon-blue)] to-[var(--color-brand-blue)] rounded-2xl opacity-0 group-hover:opacity-[0.08] transition-opacity duration-500" />
               
@@ -235,13 +235,13 @@ export default function DashboardEstrategico() {
       </div>
 
       {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
         {/* Cash Flow Area Chart */}
-        <div className="lg:col-span-2 glass-panel rounded-2xl p-6 min-h-[380px] flex flex-col">
-          <h3 className="text-lg font-bold mb-4">Fluxo de Caixa Mensal</h3>
+        <div className="lg:col-span-2 glass-panel rounded-2xl p-4 sm:p-6 min-h-[300px] sm:min-h-[380px] flex flex-col">
+          <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4">Fluxo de Caixa Mensal</h3>
           {data.cashFlow.length > 0 ? (
             <div className="flex-1 w-full">
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={200} className="sm:h-[300px]">
                 <AreaChart data={data.cashFlow} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorIncome" x1="0" y1="0" x2="0" y2="1">
@@ -270,14 +270,14 @@ export default function DashboardEstrategico() {
         </div>
 
         {/* Pie Charts Column */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4 sm:gap-6">
           {renderPieDonut(data.receitasPorCategoria, COLORS_INCOME, "Receitas por Categoria")}
           {renderPieDonut(data.despesasPorCategoria, COLORS_EXPENSE, "Despesas por Categoria")}
         </div>
       </div>
 
       {/* Recent Activity */}
-      <div className="glass-panel rounded-2xl p-6">
+      <div className="glass-panel rounded-2xl p-4 sm:p-6">
         <h3 className="text-lg font-bold mb-4">Atividade Recente</h3>
         <ul className="space-y-2">
           {loading ? (

@@ -78,16 +78,16 @@ export default function ConfiguracoesPage() {
   return (
     <div className="max-w-4xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 sm:mb-8">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">Configurações</h2>
-          <p className="text-gray-500 mt-1">Gerencie seu perfil, os dados da sua empresa e preferências do sistema.</p>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Configurações</h2>
+          <p className="text-gray-500 mt-1 text-sm sm:text-base">Gerencie seu perfil, os dados da sua empresa e preferências do sistema.</p>
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-8">
+      <div className="flex flex-col md:flex-row gap-4 sm:gap-8">
         {/* Sidebar Nav */}
-        <div className="w-full md:w-64 space-y-2">
+        <div className="w-full md:w-64 flex md:flex-col gap-1 sm:gap-2 overflow-x-auto md:overflow-visible no-scrollbar">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -109,7 +109,7 @@ export default function ConfiguracoesPage() {
         </div>
 
         {/* Content */}
-        <div className="flex-1 glass-panel rounded-3xl p-8 relative min-h-[400px]">
+        <div className="flex-1 glass-panel rounded-3xl p-4 sm:p-6 lg:p-8 relative min-h-[400px]">
           {loading ? (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-8 h-8 border-4 border-[var(--color-brand-blue)] border-t-transparent rounded-full animate-spin"></div>

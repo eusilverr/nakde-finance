@@ -179,16 +179,16 @@ export default function GestaoFinanceira() {
   return (
     <>
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 sm:mb-8">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">Financeiro (Contas e DRE)</h2>
-          <p className="text-gray-500 mt-1">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Financeiro (Contas e DRE)</h2>
+          <p className="text-gray-500 mt-1 text-sm sm:text-base">
             Controle de fluxo de caixa, pagamentos pendentes e receitas.
           </p>
         </div>
         <button 
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 py-3 px-5 rounded-xl text-sm font-medium text-white bg-[var(--color-brand-blue)] hover:bg-[var(--color-brand-blue-hover)] transition-all cursor-pointer shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:scale-105"
+          className="flex items-center gap-2 py-2.5 sm:py-3 px-4 sm:px-5 rounded-xl text-sm font-medium text-white bg-[var(--color-brand-blue)] hover:bg-[var(--color-brand-blue-hover)] transition-all cursor-pointer shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:scale-105 w-full sm:w-auto justify-center"
         >
           <Plus size={18} />
           Novo Lançamento
@@ -196,7 +196,7 @@ export default function GestaoFinanceira() {
       </div>
 
       {/* KPI Cards DRE */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
         <div className="glass-panel rounded-2xl p-6 border-t-4 border-emerald-500 relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
             <ArrowUpRight className="w-16 h-16 text-emerald-500" />
@@ -262,15 +262,15 @@ export default function GestaoFinanceira() {
       </div>
 
       {/* Transactions List */}
-      <div className="glass-panel rounded-3xl p-6">
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-          <h3 className="text-lg font-bold flex items-center gap-2">
+      <div className="glass-panel rounded-3xl p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-3 sm:gap-4">
+          <h3 className="text-base sm:text-lg font-bold flex items-center gap-2">
             <Receipt className="w-5 h-5 text-[var(--color-brand-blue)]" />
             Lançamentos
           </h3>
           
-          <div className="flex items-center gap-3 w-full sm:w-auto">
-            <div className="relative flex-1 sm:w-64">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full sm:w-auto">
+            <div className="relative flex-1 sm:w-48 lg:w-64 min-w-[140px]">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input 
                 type="text"
@@ -293,14 +293,14 @@ export default function GestaoFinanceira() {
               type="date"
               value={filterDateStart}
               onChange={e => setFilterDateStart(e.target.value)}
-              className="w-36 px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:light dark]"
+              className="w-[130px] sm:w-32 lg:w-36 px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:light dark]"
             />
             <span className="text-gray-500 text-xs">até</span>
             <input
               type="date"
               value={filterDateEnd}
               onChange={e => setFilterDateEnd(e.target.value)}
-              className="w-36 px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:light dark]"
+              className="w-[130px] sm:w-32 lg:w-36 px-3 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:light dark]"
             />
           </div>
         </div>
@@ -372,13 +372,13 @@ export default function GestaoFinanceira() {
                       <div className="flex items-center justify-end gap-1">
                         <button 
                           onClick={() => openEditModal(tx)}
-                          className="p-2 rounded-lg text-gray-500 hover:bg-blue-500/10 hover:text-blue-400 transition-colors opacity-0 group-hover:opacity-100"
+                          className="p-2 rounded-lg text-gray-500 hover:bg-blue-500/10 hover:text-blue-400 transition-colors md:opacity-0 md:group-hover:opacity-100"
                         >
                           <Pencil className="w-4 h-4" />
                         </button>
                         <button 
                           onClick={() => handleDelete(tx.id)}
-                          className="p-2 rounded-lg text-gray-500 hover:bg-rose-500/10 hover:text-rose-500 transition-colors opacity-0 group-hover:opacity-100"
+                          className="p-2 rounded-lg text-gray-500 hover:bg-rose-500/10 hover:text-rose-500 transition-colors md:opacity-0 md:group-hover:opacity-100"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -394,8 +394,8 @@ export default function GestaoFinanceira() {
 
       {/* Modal Criar Transação */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="glass-panel w-full max-w-lg rounded-3xl p-8 shadow-2xl relative overflow-hidden animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-2 sm:p-4">
+          <div className="glass-panel w-full max-w-lg rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl relative overflow-hidden animate-fadeIn">
             <h3 className="text-xl font-bold mb-6">Novo Lançamento Financeiro</h3>
             
             <form onSubmit={handleCreateTransaction} className="space-y-4">
@@ -506,8 +506,8 @@ export default function GestaoFinanceira() {
 
       {/* Modal Editar Transação */}
       {showEditModal && editingTx && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="glass-panel w-full max-w-lg rounded-3xl p-8 shadow-2xl relative overflow-hidden animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-2 sm:p-4">
+          <div className="glass-panel w-full max-w-lg rounded-2xl sm:rounded-3xl p-4 sm:p6 lg:p-8 shadow-2xl relative overflow-hidden animate-fadeIn">
             <h3 className="text-xl font-bold mb-6">Editar Lançamento</h3>
             
             <form onSubmit={handleUpdateTransaction} className="space-y-4">

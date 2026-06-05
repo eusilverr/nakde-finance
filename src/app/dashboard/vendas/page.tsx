@@ -307,16 +307,16 @@ export default function GestaoVendas() {
   return (
     <>
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 sm:mb-8">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">Gestão de Vendas</h2>
-          <p className="text-gray-500 mt-1">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Gestão de Vendas</h2>
+          <p className="text-gray-500 mt-1 text-sm sm:text-base">
             Gerencie vendas, acompanhe pedidos comerciais e monitore o desempenho financeiro da operação.
           </p>
         </div>
         <button
           onClick={openCreateModal}
-          className="flex items-center gap-2 py-3 px-5 rounded-xl text-sm font-medium text-white bg-[var(--color-brand-blue)] hover:bg-[var(--color-brand-blue-hover)] transition-all cursor-pointer shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:scale-105"
+          className="flex items-center gap-2 py-2.5 sm:py-3 px-4 sm:px-5 rounded-xl text-sm font-medium text-white bg-[var(--color-brand-blue)] hover:bg-[var(--color-brand-blue-hover)] transition-all cursor-pointer shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:scale-105 w-full sm:w-auto justify-center"
         >
           <Plus size={18} />
           Nova Venda
@@ -324,22 +324,22 @@ export default function GestaoVendas() {
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
-        <div className="glass-panel rounded-2xl p-6 relative overflow-hidden group">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
+        <div className="glass-panel rounded-2xl p-4 sm:p-6 relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
             <ShoppingCart className="w-16 h-16" />
           </div>
           <p className="text-sm font-medium text-gray-500 mb-1">Vendas do Mês</p>
           <h3 className="text-3xl font-bold">{vendasDoMes}</h3>
         </div>
-        <div className="glass-panel rounded-2xl p-6 relative overflow-hidden group">
+        <div className="glass-panel rounded-2xl p-4 sm:p-6 relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
             <DollarSign className="w-16 h-16 text-emerald-500" />
           </div>
           <p className="text-sm font-medium text-gray-500 mb-1">Receita Total</p>
           <h3 className="text-2xl font-bold text-emerald-500">{formatBRL(receitaTotal)}</h3>
         </div>
-        <div className="glass-panel rounded-2xl p-6 relative overflow-hidden group">
+        <div className="glass-panel rounded-2xl p-4 sm:p-6 relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
             <Percent className="w-16 h-16 text-emerald-500" />
           </div>
@@ -348,14 +348,14 @@ export default function GestaoVendas() {
             {avgMargin !== null ? `${avgMargin.toFixed(1)}%` : "—"}
           </h3>
         </div>
-        <div className="glass-panel rounded-2xl p-6 relative overflow-hidden group">
+        <div className="glass-panel rounded-2xl p-4 sm:p-6 relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
             <Clock className="w-16 h-16 text-amber-500" />
           </div>
           <p className="text-sm font-medium text-gray-500 mb-1">Pedidos Pendentes</p>
           <h3 className="text-3xl font-bold text-amber-400">{pedidosPendentes}</h3>
         </div>
-        <div className="glass-panel rounded-2xl p-6 relative overflow-hidden group">
+        <div className="glass-panel rounded-2xl p-4 sm:p-6 relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
             <TrendingUp className="w-16 h-16 text-[var(--color-brand-blue)]" />
           </div>
@@ -365,11 +365,11 @@ export default function GestaoVendas() {
       </div>
 
       {/* Table */}
-      <div className="glass-panel rounded-3xl p-6">
+      <div className="glass-panel rounded-3xl p-4 sm:p-6">
         {/* Filters */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-          <div className="flex flex-wrap items-center gap-3 w-full">
-            <div className="relative flex-1 min-w-[200px]">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-3 sm:gap-4">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full">
+            <div className="relative flex-1 min-w-[140px] sm:min-w-[200px]">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
@@ -392,14 +392,14 @@ export default function GestaoVendas() {
               type="date"
               value={filterDateStart}
               onChange={(e) => setFilterDateStart(e.target.value)}
-              className="py-2 px-3 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:light dark]"
+              className="py-2 px-3 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:light dark] w-[130px] sm:w-auto"
               title="Data início"
             />
             <input
               type="date"
               value={filterDateEnd}
               onChange={(e) => setFilterDateEnd(e.target.value)}
-              className="py-2 px-3 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:light dark]"
+              className="py-2 px-3 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)] [color-scheme:light dark] w-[130px] sm:w-auto"
               title="Data fim"
             />
             <select
@@ -476,14 +476,14 @@ export default function GestaoVendas() {
                     <td className="px-4 py-4 text-right" onClick={(e) => e.stopPropagation()}>
                       <button
                         onClick={() => router.push(`/dashboard/vendas/${sale.id}`)}
-                        className="p-2 rounded-lg text-gray-500 hover:bg-sky-500/10 hover:text-sky-400 transition-colors opacity-0 group-hover:opacity-100"
+                        className="p-2 rounded-lg text-gray-500 hover:bg-sky-500/10 hover:text-sky-400 transition-colors md:opacity-0 md:group-hover:opacity-100"
                         title="Visualizar"
                       >
                         <Eye className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => handleDelete(sale.id)}
-                        className="p-2 rounded-lg text-gray-500 hover:bg-rose-500/10 hover:text-rose-500 transition-colors opacity-0 group-hover:opacity-100"
+                        className="p-2 rounded-lg text-gray-500 hover:bg-rose-500/10 hover:text-rose-500 transition-colors md:opacity-0 md:group-hover:opacity-100"
                         title="Excluir"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -499,15 +499,15 @@ export default function GestaoVendas() {
 
       {/* Modal Nova Venda */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto">
-          <div className="glass-panel w-full max-w-2xl rounded-3xl p-8 shadow-2xl relative overflow-hidden my-8">
-            <h3 className="text-xl font-bold mb-6">Nova Venda</h3>
+        <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center bg-black/60 backdrop-blur-sm p-2 sm:p-4 overflow-y-auto">
+          <div className="glass-panel w-full max-w-2xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl relative overflow-hidden my-4 sm:my-8">
+            <h3 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Nova Venda</h3>
 
-            <form onSubmit={handleCreateSale} className="space-y-6">
+            <form onSubmit={handleCreateSale} className="space-y-4 sm:space-y-6">
               {/* Informações Gerais */}
               <div>
-                <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Informações Gerais</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3 sm:mb-4">Informações Gerais</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div className="space-y-1">
                     <label className="text-sm font-medium text-gray-300">Cliente</label>
                     <select
@@ -585,14 +585,14 @@ export default function GestaoVendas() {
                   </p>
                 )}
 
-                <div className="overflow-x-auto pb-2">
+                <div className="space-y-3">
                 {items.map((item, idx) => (
                   <div
                     key={idx}
-                    className="flex items-start gap-3 p-4 mb-3 border border-[var(--border-color)] rounded-xl bg-white/5 min-w-[800px]"
+                    className="flex flex-col sm:flex-row items-start gap-2 sm:gap-3 p-3 sm:p-4 border border-[var(--border-color)] rounded-xl bg-white/5"
                   >
-                    <div className="flex-1 grid grid-cols-12 gap-3 items-end">
-                      <div className="col-span-2 space-y-1">
+                    <div className="flex-1 grid grid-cols-2 sm:grid-cols-12 gap-2 sm:gap-3 w-full">
+                      <div className="col-span-1 sm:col-span-2 space-y-1">
                         <label className="text-[11px] font-medium text-gray-500">Tipo</label>
                         <select
                           value={item.item_type}
@@ -603,7 +603,7 @@ export default function GestaoVendas() {
                           <option value="service">Serviço</option>
                         </select>
                       </div>
-                      <div className="col-span-3 space-y-1">
+                      <div className="col-span-1 sm:col-span-3 space-y-1">
                         <label className="text-[11px] font-medium text-gray-500">Item</label>
                         <select
                           value={item.item_id}
@@ -618,7 +618,7 @@ export default function GestaoVendas() {
                           ))}
                         </select>
                       </div>
-                      <div className="col-span-2 space-y-1">
+                      <div className="space-y-1">
                         <label className="text-[11px] font-medium text-gray-500">Qtd</label>
                         <input
                           type="number"
@@ -628,7 +628,7 @@ export default function GestaoVendas() {
                           className="w-full px-2 py-1.5 border border-[var(--border-color)] rounded-lg bg-white/5 text-xs focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                         />
                       </div>
-                      <div className="col-span-2 space-y-1">
+                      <div className="space-y-1">
                         <label className="text-[11px] font-medium text-gray-500">Valor Un.</label>
                         <input
                           type="number"
@@ -639,7 +639,7 @@ export default function GestaoVendas() {
                           className="w-full px-2 py-1.5 border border-[var(--border-color)] rounded-lg bg-white/5 text-xs focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                         />
                       </div>
-                      <div className="col-span-2 space-y-1">
+                      <div className="space-y-1">
                         <label className="text-[11px] font-medium text-gray-500">Desc.</label>
                         <input
                           type="number"
@@ -650,7 +650,7 @@ export default function GestaoVendas() {
                           className="w-full px-2 py-1.5 border border-[var(--border-color)] rounded-lg bg-white/5 text-xs focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                         />
                       </div>
-                      <div className="col-span-1 space-y-1">
+                      <div className="space-y-1">
                         <label className="text-[11px] font-medium text-gray-500">Sub.</label>
                         <div className="px-2 py-1.5 text-xs font-medium text-emerald-400">
                           {formatBRL(calcItemSubtotal(item))}
@@ -660,7 +660,7 @@ export default function GestaoVendas() {
                     <button
                       type="button"
                       onClick={() => removeItem(idx)}
-                      className="p-1.5 mt-5 text-gray-500 hover:text-rose-500 hover:bg-rose-500/10 rounded-lg transition-colors"
+                      className="p-1.5 text-gray-500 hover:text-rose-500 hover:bg-rose-500/10 rounded-lg transition-colors self-end sm:self-auto"
                     >
                       <X className="w-4 h-4" />
                     </button>
@@ -717,18 +717,18 @@ export default function GestaoVendas() {
               )}
 
               {/* Actions */}
-              <div className="flex justify-end gap-3 pt-6 border-t border-[var(--border-color)]">
+              <div className="flex justify-end gap-3 pt-4 sm:pt-6 border-t border-[var(--border-color)]">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-5 py-2 rounded-xl border border-[var(--border-color)] text-gray-400 hover:bg-white/5 text-sm transition-all"
+                  className="px-4 sm:px-5 py-2 rounded-xl border border-[var(--border-color)] text-gray-400 hover:bg-white/5 text-sm transition-all"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting || items.length === 0}
-                  className="px-5 py-2 rounded-xl bg-[var(--color-brand-blue)] hover:bg-[var(--color-brand-blue-hover)] text-white text-sm transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] disabled:opacity-70"
+                  className="px-4 sm:px-5 py-2 rounded-xl bg-[var(--color-brand-blue)] hover:bg-[var(--color-brand-blue-hover)] text-white text-sm transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] disabled:opacity-70"
                 >
                   {isSubmitting ? "Registrando..." : "Registrar Venda"}
                 </button>

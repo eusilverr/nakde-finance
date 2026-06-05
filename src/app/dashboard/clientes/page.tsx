@@ -234,10 +234,10 @@ export default function CRMClientes() {
   return (
     <>
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 sm:mb-8">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">Clientes e Fornecedores (CRM)</h2>
-          <p className="text-gray-500 mt-1">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Clientes e Fornecedores (CRM)</h2>
+          <p className="text-gray-500 mt-1 text-sm sm:text-base">
             Gerencie o relacionamento com clientes e fornecedores e rastreie suas linhas do tempo operacionais.
           </p>
         </div>
@@ -251,7 +251,7 @@ export default function CRMClientes() {
           </button>
           
           {showDropdown && (
-            <div className="absolute right-0 mt-2 w-48 bg-[var(--panel-bg)] border border-[var(--border-color)] rounded-xl shadow-2xl z-40 overflow-hidden animate-in fade-in slide-in-from-top-2">
+            <div className="absolute right-0 sm:left-auto left-0 mt-2 w-48 bg-[var(--panel-bg)] border border-[var(--border-color)] rounded-xl shadow-2xl z-40 overflow-hidden animate-in fade-in slide-in-from-top-2">
               <button 
                 onClick={() => openNewModal("cliente")}
                 className="w-full flex items-center gap-3 px-4 py-3 text-sm text-left hover:bg-white/5 transition-colors cursor-pointer"
@@ -279,7 +279,7 @@ export default function CRMClientes() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         
         {/* Left Pane - List of Contacts */}
-        <div className="lg:col-span-4 glass-panel rounded-3xl p-6 flex flex-col min-h-[600px] border border-[var(--border-color)] shadow-sm">
+        <div className="lg:col-span-4 glass-panel rounded-3xl p-4 sm:p-6 flex flex-col min-h-[400px] sm:min-h-[600px] border border-[var(--border-color)] shadow-sm">
           
           {/* Toggles */}
           <div className="flex p-1 bg-white/5 rounded-xl mb-6">
@@ -379,23 +379,23 @@ export default function CRMClientes() {
         </div>
 
         {/* Right Pane - Detail View */}
-        <div className="lg:col-span-8 glass-panel rounded-3xl flex flex-col min-h-[600px] border border-[var(--border-color)] overflow-hidden shadow-sm">
+        <div className="lg:col-span-8 glass-panel rounded-3xl flex flex-col min-h-[400px] sm:min-h-[600px] border border-[var(--border-color)] overflow-hidden shadow-sm">
           {selectedClient ? (
             <>
               {/* Premium Header */}
-              <div className="p-8 border-b border-[var(--border-color)] bg-gradient-to-b from-white/5 to-transparent">
+              <div className="p-4 sm:p-6 lg:p-8 border-b border-[var(--border-color)] bg-gradient-to-b from-white/5 to-transparent">
                 <div className="flex flex-col md:flex-row justify-between items-start gap-4">
-                  <div className="flex items-start gap-5">
-                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center border shadow-inner ${
+                  <div className="flex items-start gap-3 sm:gap-5">
+                    <div className={`w-10 h-10 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center border shadow-inner shrink-0 ${
                       (selectedClient.type || "cliente") === "cliente" 
                         ? "bg-gradient-to-br from-blue-500/20 to-blue-600/10 border-blue-500/30 text-blue-400" 
                         : "bg-gradient-to-br from-purple-500/20 to-purple-600/10 border-purple-500/30 text-purple-400"
                     }`}>
-                      {(selectedClient.type || "cliente") === "cliente" ? <Building className="w-7 h-7" /> : <Building2 className="w-7 h-7" />}
+                      {(selectedClient.type || "cliente") === "cliente" ? <Building className="w-5 h-5 sm:w-7 sm:h-7" /> : <Building2 className="w-5 h-5 sm:w-7 sm:h-7" />}
                     </div>
-                    <div>
-                      <div className="flex items-center gap-3">
-                        <h3 className="text-2xl font-bold text-[var(--foreground)]">{selectedClient.name}</h3>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                        <h3 className="text-lg sm:text-2xl font-bold text-[var(--foreground)] truncate">{selectedClient.name}</h3>
                         <span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold tracking-wider ${
                           (selectedClient.type || "cliente") === "cliente" 
                             ? "bg-blue-500/10 text-blue-400 border border-blue-500/20" 
@@ -405,7 +405,7 @@ export default function CRMClientes() {
                         </span>
                       </div>
                       
-                      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-3 text-sm text-gray-400">
+                      <div className="flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-1.5 mt-2 sm:mt-3 text-xs sm:text-sm text-gray-400">
                         <span className="flex items-center gap-1.5"><Mail className="w-4 h-4" /> {selectedClient.email}</span>
                         {selectedClient.document && <span className="flex items-center gap-1.5"><FileText className="w-4 h-4" /> {selectedClient.document}</span>}
                         {selectedClient.city_state && <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4" /> {selectedClient.city_state}</span>}
@@ -435,8 +435,8 @@ export default function CRMClientes() {
               </div>
 
               {/* Navigation Tabs */}
-              <div className="px-8 border-b border-[var(--border-color)] overflow-x-auto no-scrollbar">
-                <div className="flex gap-6 min-w-max">
+              <div className="px-4 sm:px-8 border-b border-[var(--border-color)] overflow-x-auto no-scrollbar">
+                <div className="flex gap-4 sm:gap-6 min-w-max">
                   {[
                     { id: "visao_geral", label: "Visão Geral" },
                     { id: "historico", label: "Histórico" },
@@ -448,7 +448,7 @@ export default function CRMClientes() {
                     <button
                       key={tab.id}
                       onClick={() => setDetailsTab(tab.id as any)}
-                      className={`py-4 text-sm font-medium transition-all relative whitespace-nowrap cursor-pointer ${
+                      className={`py-3 sm:py-4 text-xs sm:text-sm font-medium transition-all relative whitespace-nowrap cursor-pointer ${
                         detailsTab === tab.id 
                           ? "text-[var(--color-brand-blue)]" 
                           : "text-gray-500 hover:text-gray-300"
@@ -464,7 +464,7 @@ export default function CRMClientes() {
               </div>
 
               {/* Tab Content Area */}
-              <div className="flex-1 p-8 overflow-y-auto custom-scrollbar bg-[var(--background)]/30">
+              <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto custom-scrollbar bg-[var(--background)]/30">
                 
                 {detailsTab === "visao_geral" && (
                   <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
@@ -605,14 +605,14 @@ export default function CRMClientes() {
       {/* New Contact Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="glass-panel w-full max-w-2xl rounded-3xl p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
-            <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+          <div className="glass-panel w-full max-w-2xl rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <h3 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 flex items-center gap-2">
               {newType === "cliente" ? <Building className="w-5 h-5 text-blue-500" /> : <Building2 className="w-5 h-5 text-purple-500" />}
               Adicionar Novo {newType === "cliente" ? "Cliente" : "Fornecedor"}
             </h3>
             
-            <form onSubmit={handleCreateClient} className="space-y-5">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <form onSubmit={handleCreateClient} className="space-y-4 sm:space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                 <div className="space-y-1.5 md:col-span-2">
                   <label className="text-sm font-medium text-gray-300">Razão Social / Nome *</label>
                   <input 
@@ -724,14 +724,14 @@ export default function CRMClientes() {
       {/* Edit Contact Modal */}
       {editingClient && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="glass-panel w-full max-w-2xl rounded-3xl p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
-            <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+          <div className="glass-panel w-full max-w-2xl rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <h3 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 flex items-center gap-2">
               <Pencil className="w-5 h-5 text-gray-400" />
               Editar Perfil de Contato
             </h3>
             
-            <form onSubmit={handleEditClient} className="space-y-5">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <form onSubmit={handleEditClient} className="space-y-4 sm:space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                 <div className="space-y-1.5 md:col-span-2">
                   <label className="text-sm font-medium text-gray-300">Razão Social / Nome *</label>
                   <input 
