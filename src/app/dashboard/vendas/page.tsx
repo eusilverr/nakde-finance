@@ -27,6 +27,7 @@ import {
   SaleModel,
   SaleItemModel
 } from "@/features/sales/actions";
+import { createClientAction } from "@/features/clients/actions";
 
 const STATUS_LABELS: Record<string, string> = {
   pending: "Pendente",
@@ -104,6 +105,11 @@ export default function GestaoVendas() {
   const [paymentMethod, setPaymentMethod] = useState<"pix" | "boleto" | "credit_card" | "transfer" | null>(null);
   const [installments, setInstallments] = useState(1);
   const [dueDate, setDueDate] = useState(todayStr);
+
+  const [showClientModal, setShowClientModal] = useState(false);
+  const [newClientName, setNewClientName] = useState("");
+  const [newClientEmail, setNewClientEmail] = useState("");
+  const [newClientDoc, setNewClientDoc] = useState("");
 
   useEffect(() => {
     loadSales();
@@ -243,6 +249,30 @@ export default function GestaoVendas() {
     setClientId(id);
     const c = clients.find((cl) => cl.id === id);
     setClientName(c?.name || "");
+  };
+
+  const handleCreateClient = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newClientName.trim()) return;
+
+    const result = await createClientAction({
+      name: newClientName.trim(),
+      type: "cliente",
+      status: "active",
+      email: newClientEmail.trim() || "",
+      document: newClientDoc.trim() || "",
+    });
+
+    if (result.success && result.data) {
+      setClients([...clients, result.data]);
+      handleClientChange(result.data.id);
+      setShowClientModal(false);
+      setNewClientName("");
+      setNewClientEmail("");
+      setNewClientDoc("");
+    } else {
+      alert(result.error || "Erro ao cadastrar cliente.");
+    }
   };
 
   // Derive unique responsible list for filter
@@ -510,17 +540,26 @@ export default function GestaoVendas() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div className="space-y-1">
                     <label className="text-sm font-medium text-gray-300">Cliente</label>
-                    <select
-                      required
-                      value={clientId}
-                      onChange={(e) => handleClientChange(e.target.value)}
-                      className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
-                    >
-                      <option value="" disabled>Selecione um cliente...</option>
-                      {clients.map((c) => (
-                        <option key={c.id} value={c.id}>{c.name}</option>
-                      ))}
-                    </select>
+                    <div className="flex gap-2">
+                      <select
+                        required
+                        value={clientId}
+                        onChange={(e) => handleClientChange(e.target.value)}
+                        className="flex-1 w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
+                      >
+                        <option value="" disabled>Selecione um cliente...</option>
+                        {clients.map((c) => (
+                          <option key={c.id} value={c.id}>{c.name}</option>
+                        ))}
+                      </select>
+                      <button
+                        type="button"
+                        onClick={() => setShowClientModal(true)}
+                        className="px-4 py-2 rounded-xl border border-[var(--border-color)] text-[var(--foreground)] hover:bg-white/5 text-sm transition-all whitespace-nowrap"
+                      >
+                        + Novo
+                      </button>
+                    </div>
                   </div>
                   <div className="space-y-1">
                     <label className="text-sm font-medium text-gray-300">Tipo da Venda</label>
@@ -569,7 +608,7 @@ export default function GestaoVendas() {
               {/* Itens da Venda */}
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Itens da Venda</h4>
+                  <h4 className="text-sm font-semibold text-[var(--foreground)] uppercase tracking-wider">Itens da Venda</h4>
                   <button
                     type="button"
                     onClick={addItem}
@@ -618,7 +657,7 @@ export default function GestaoVendas() {
                           ))}
                         </select>
                       </div>
-                      <div className="space-y-1">
+                      <div className="col-span-1 sm:col-span-2 space-y-1">
                         <label className="text-[11px] font-medium text-gray-500">Qtd</label>
                         <input
                           type="number"
@@ -628,7 +667,7 @@ export default function GestaoVendas() {
                           className="w-full px-2 py-1.5 border border-[var(--border-color)] rounded-lg bg-white/5 text-xs focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                         />
                       </div>
-                      <div className="space-y-1">
+                      <div className="col-span-1 sm:col-span-2 space-y-1">
                         <label className="text-[11px] font-medium text-gray-500">Valor Un.</label>
                         <input
                           type="number"
@@ -639,7 +678,7 @@ export default function GestaoVendas() {
                           className="w-full px-2 py-1.5 border border-[var(--border-color)] rounded-lg bg-white/5 text-xs focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                         />
                       </div>
-                      <div className="space-y-1">
+                      <div className="col-span-1 sm:col-span-2 space-y-1">
                         <label className="text-[11px] font-medium text-gray-500">Desc.</label>
                         <input
                           type="number"
@@ -650,7 +689,7 @@ export default function GestaoVendas() {
                           className="w-full px-2 py-1.5 border border-[var(--border-color)] rounded-lg bg-white/5 text-xs focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
                         />
                       </div>
-                      <div className="space-y-1">
+                      <div className="col-span-1 sm:col-span-1 space-y-1">
                         <label className="text-[11px] font-medium text-gray-500">Sub.</label>
                         <div className="px-2 py-1.5 text-xs font-medium text-emerald-400">
                           {formatBRL(calcItemSubtotal(item))}
@@ -678,7 +717,7 @@ export default function GestaoVendas() {
 
               {/* Financeiro */}
               <div>
-                <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Financeiro</h4>
+                <h4 className="text-sm font-semibold text-[var(--foreground)] uppercase tracking-wider mb-4">Financeiro</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="text-sm font-medium text-gray-300">Forma de Pagamento</label>
@@ -731,6 +770,66 @@ export default function GestaoVendas() {
                   className="px-4 sm:px-5 py-2 rounded-xl bg-[var(--color-brand-blue)] hover:bg-[var(--color-brand-blue-hover)] text-white text-sm transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] disabled:opacity-70"
                 >
                   {isSubmitting ? "Registrando..." : "Registrar Venda"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Novo Cliente */}
+      {showClientModal && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-2 sm:p-4">
+          <div className="glass-panel w-full max-w-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl relative overflow-hidden animate-fadeIn">
+            <h3 className="text-lg sm:text-xl font-bold mb-6">Novo Cliente</h3>
+
+            <form onSubmit={handleCreateClient} className="space-y-4">
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-300">Nome</label>
+                <input
+                  type="text" required
+                  value={newClientName}
+                  onChange={(e) => setNewClientName(e.target.value)}
+                  className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
+                  placeholder="Nome do cliente"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-300">Email</label>
+                <input
+                  type="email"
+                  value={newClientEmail}
+                  onChange={(e) => setNewClientEmail(e.target.value)}
+                  className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
+                  placeholder="email@exemplo.com"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-300">CPF/CNPJ</label>
+                <input
+                  type="text"
+                  value={newClientDoc}
+                  onChange={(e) => setNewClientDoc(e.target.value)}
+                  className="w-full px-4 py-2 border border-[var(--border-color)] rounded-xl bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-blue)]"
+                  placeholder="000.000.000-00"
+                />
+              </div>
+
+              <div className="flex justify-end gap-3 pt-6 border-t border-[var(--border-color)] mt-6">
+                <button
+                  type="button"
+                  onClick={() => setShowClientModal(false)}
+                  className="px-5 py-2 rounded-xl border border-[var(--border-color)] text-gray-400 hover:bg-white/5 text-sm transition-all"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-[var(--color-brand-blue)] hover:bg-[var(--color-brand-blue-hover)] text-white text-sm transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)]"
+                >
+                  Cadastrar
                 </button>
               </div>
             </form>

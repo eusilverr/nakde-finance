@@ -256,8 +256,7 @@ export async function processSubscriptionBillings(): Promise<void> {
   const { data: existingTxs } = await supabase
     .from("financial_transactions")
     .select("reference_id")
-    .in("reference_id", referenceIds)
-    .eq("status", "pending");
+    .in("reference_id", referenceIds);
 
   const existingRefIds = new Set(existingTxs?.map((tx) => tx.reference_id) ?? []);
 
@@ -326,7 +325,7 @@ async function upsertFinanceForServiceOrder(
 
   const { data: existing } = await supabase
     .from("financial_transactions")
-    .select("id")
+    .select("id, status")
     .eq("reference_id", order.id)
     .maybeSingle();
 
@@ -336,17 +335,16 @@ async function upsertFinanceForServiceOrder(
     ? order.next_billing_date.split("T")[0]
     : (() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; })();
 
-  if (existing) {
+  if (existing && existing.status === "pending") {
     await supabase
       .from("financial_transactions")
       .update({
         amount: order.value,
         due_date: dueDate,
         description,
-        status: "pending",
       })
       .eq("id", existing.id);
-  } else {
+  } else if (!existing) {
     await createTransactionAction({
       type: "income",
       description,
